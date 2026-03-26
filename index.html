@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fadel Alnaqi</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --accent: #00d2ff;
+            --bg: #050505;
+            --card: rgba(20, 20, 25, 0.8);
+            --glow: rgba(0, 210, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 50% -20%, #1a1a2e, transparent),
+                radial-gradient(circle at 0% 100%, #16213e, transparent);
+            color: #fff;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .header {
+            padding: 50px 20px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 40%, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            font-size: 11px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-top: 8px;
+            font-weight: 700;
+            opacity: 0.8;
+        }
+
+        .glass-card {
+            background: var(--card);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.05);
+            width: 88%;
+            max-width: 380px;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            background: rgba(0, 210, 255, 0.05);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .item {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .item:hover { background: rgba(255,255,255,0.05); }
+        .item.active {
+            background: var(--accent);
+            box-shadow: 0 0 30px var(--glow);
+            border: none;
+            transform: translateY(-5px);
+        }
+
+        .item img { width: 28px; height: 28px; margin-bottom: 8px; transition: 0.3s; }
+        .item span { font-size: 12px; font-weight: 600; color: #aaa; }
+        .item.active span { color: #000; }
+        .item.active img { filter: brightness(0); }
+
+        #btn {
+            width: 100%;
+            padding: 20px;
+            border: none;
+            border-radius: 20px;
+            background: #1a1a1a;
+            color: #444;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: not-allowed;
+            transition: 0.4s;
+        }
+
+        #btn.ready {
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        #btn.ready:active { transform: scale(0.97); }
+
+        .result-box { margin-top: 25px; display: none; text-align: center; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to {opacity:1; transform:translateY(0);} }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>FADEL ALNAQI</h1>
+        <p>Developed by NO</p>
+    </div>
+
+    <div class="glass-card">
+        <input type="text" id="url" placeholder="أدخل الرابط أو اليوزر @">
+
+        <div class="grid">
+            <div class="item" onclick="sel(this, 'tiktok')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/tiktok.png">
+                <span>TikTok</span>
+            </div>
+            <div class="item" onclick="sel(this, 'insta')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png">
+                <span>Insta</span>
+            </div>
+            <div class="item" onclick="sel(this, 'yt')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/youtube-play.png">
+                <span>YouTube</span>
+            </div>
+            <div class="item" onclick="sel(this, 'fb')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png">
+                <span>Facebook</span>
+            </div>
+            <div class="item" onclick="sel(this, 'snap')">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/snapchat.png">
+                <span>Snapchat</span>
+            </div>
+        </div>
+
+        <button id="btn" onclick="run()">إرسال للبوت</button>
+
+        <div id="res" class="result-box"></div>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function sel(el, plat) {
+            document.querySelectorAll('.item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+            const b = document.getElementById('btn');
+            b.classList.add('ready');
+            b.innerText = plat === 'tiktok' ? "سحب فيديو أو بروفايل" : "بدء التحميل المباشر";
+        }
+
+        async function run() {
+            const u = document.getElementById('url').value;
+            const b = document.getElementById('btn');
+            
+            // سحب الآيدي تلقائياً من نظام تليجرام
+            const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : null;
+
+            if (!u) {
+                tg.showAlert("يرجى إدخال الرابط أولاً");
+                return;
+            }
+
+            if (!userId) {
+                tg.showAlert("يجب فتح التطبيق من داخل التليجرام ليتعرف عليك البوت تلقائياً");
+                return;
+            }
+
+            b.innerText = "⚡ جاري الإرسال للبوت...";
+            b.style.pointerEvents = "none";
+            b.style.opacity = "0.6";
+            
+            try {
+                // الاتصال بسيرفر الماك المحلي (استبدل بـ Ngrok عند التجربة من الهاتف)
+                const response = await fetch('http://127.0.0.1:8000/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        url: u, 
+                        user_id: userId.toString() 
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    tg.close(); // إغلاق الميني أب ليرى المستخدم الملف في البوت
+                } else {
+                    tg.showAlert("فشل المعالجة");
+                    b.innerText = "إرسال للبوت";
+                    b.style.pointerEvents = "all";
+                    b.style.opacity = "1";
+                }
+            } catch (e) {
+                tg.showAlert("خطأ في الاتصال بالسيرفر");
+                b.innerText = "إرسال للبوت";
+                b.style.pointerEvents = "all";
+                b.style.opacity = "1";
+            }
+        }
+    </script>
+</body>
+</html>
